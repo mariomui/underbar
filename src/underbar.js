@@ -393,7 +393,7 @@
     let cache = {};
     let result;
 
-
+    //takes in a function, spits back out a function.
     return function() {
       if (JSON.stringify(arguments) in cache) {
         return cache[JSON.stringify(arguments)]
@@ -420,6 +420,8 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    const copyArr =Array.from(arguments).slice(2);
+    setTimeout( ()=> {func(...copyArr)}, wait)
   };
 
 
