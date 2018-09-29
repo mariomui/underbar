@@ -245,17 +245,24 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     let accumulator = true;
-  
+    if (typeof iterator === 'undefined') {
+      
+    }
     for (let i = 0; i < collection.length; ++i ) {
-    
-      if ((iterator(collection[i])) || 0 ) {
-        accumulator = true;
+      if (iterator) {
+        if ( iterator(collection[i]) ) {
+          accumulator = true;
+        } else {
+          accumulator = false;
+        }
+        if (accumulator === false)
+        {
+          return false;
+        }
       } else {
-        accumulator = false;
-      }
-      if (accumulator === false)
-      {
-        return false;
+        if (!collection[i]) {
+          return false;
+        }
       }
     }
     
