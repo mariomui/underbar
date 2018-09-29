@@ -316,6 +316,20 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    let newer = {};
+    let i = 0;
+    while ( i < arguments.length) {
+            for (let key in (obj)) {
+              if (key in arguments[i]) {
+                obj[key] = arguments[i][key];
+              }
+            }
+            arguments[i].__proto__ = arguments[(Number(i))+1];        
+        i++;
+        debugger;
+    }
+    newer.__proto__ = obj;
+    return newer.__proto__;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
