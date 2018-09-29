@@ -189,8 +189,17 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-      for (let i = 0; i < collection.length; ++i ) {
-        accumulator += iterator(accumulator, collection[i]);
+      let j = 0;
+      if (typeof accumulator === 'undefined') {
+        accumulator = collection[0];
+        j = 1;
+      }
+      
+      for (let i = j; i < collection.length; ++i ) {
+        
+        accumulator = iterator(accumulator, collection[i]);
+        //why did i assume that accumulator automatically was addition?
+        //must remember to debug assumptions.
       }
       return accumulator;
   };
@@ -199,13 +208,37 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
-    return _.reduce(collection, function(wasFound, item) {
-      if (wasFound) {
-        return true;
+    // return _.reduce(collection, function(wasFound, item) {
+    //   if (wasFound) {
+    //     return true;
+    //   }
+    //   return item === target;
+    // }, false);
+    let accumulator = false;
+    if (typeof collection === 'object') {
+      if (Array.isArray(collection)) {
+        for (let i = 0; i < collection.length; ++i) {
+          if (collection[i] === target) {
+            
+            return true;
+          }         
+        }
+      } else {
+        for (let key in collection) {
+          if (collection[key] === target) {
+
+            return true;
+          }
+        }  
       }
-      return item === target;
-    }, false);
+    } 
+    
+    return accumulator; 
+
   };
+  /*the state of accum changes every pass.
+  begin state is not the value. if 
+  */
 
 
   // Determine whether all of the elements match a truth test.
