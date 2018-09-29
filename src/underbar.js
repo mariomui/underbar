@@ -245,9 +245,7 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     let accumulator = true;
-    if (typeof iterator === 'undefined') {
-      
-    }
+    
     for (let i = 0; i < collection.length; ++i ) {
       if (iterator) {
         if ( iterator(collection[i]) ) {
@@ -273,6 +271,29 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    const replacerFunc = function(item) {
+      if (item === true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    let accumulator = false;
+    
+    for (let i = 0; i < collection.length; ++i ) {
+        if ( typeof iterator === 'function' ? iterator(collection[i]): replacerFunc(collection[i]) ) {
+          accumulator = true;
+        } else {
+          accumulator = false;
+        }
+
+        if (accumulator === true)
+        {
+          return true;
+        }
+    }
+    
+    return accumulator;
   };
 
 
