@@ -396,9 +396,11 @@
     //takes in a function, spits back out a function.
     return function() {
       if (JSON.stringify(arguments) in cache) {
-        return cache[JSON.stringify(arguments)]
+        return cache[JSON.stringify(arguments)];
       } else {
-        result = func.apply(this,arguments); 
+        result = func.apply(this,arguments);
+        // result = func(...arguments); //<-- this works as well.
+ 
         cache[JSON.stringify(arguments)] = result;
         return result;
       }
